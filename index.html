@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
     <header>
         <h1>Dev Journal AI</h1>
@@ -34,7 +36,8 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Dev Journal AI. Built with &hearts; by Antigravity Automation.</p>
+        <p>Developed By Vedansh Derashri
+        <p>
     </footer>
 
     <script>
@@ -48,7 +51,7 @@
             try {
                 const response = await fetch('notes/posts.json');
                 if (!response.ok) throw new Error('No posts found yet.');
-                
+
                 const posts = await response.json();
                 renderPosts(posts);
             } catch (err) {
@@ -79,7 +82,7 @@
 
                 const response = await fetch(`notes/${file}`);
                 const markdown = await response.text();
-                
+
                 // Convert markdown to HTML using marked.js
                 modalContent.innerHTML = marked.parse(markdown);
             } catch (err) {
@@ -102,4 +105,5 @@
         loadPosts();
     </script>
 </body>
+
 </html>
