@@ -17,12 +17,91 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+    cursor: none;
+    /* Hide default cursor */
+}
+
 body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: var(--font-family);
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Liquid Animated Background Blobs */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+body::before {
+    width: 600px;
+    height: 600px;
+    background: rgba(132, 204, 22, 0.15);
+    /* Light lemon green blob */
+    top: -10%;
+    left: -10%;
+}
+
+body::after {
+    width: 500px;
+    height: 500px;
+    background: rgba(167, 243, 208, 0.2);
+    /* Mint border color blob */
+    bottom: -10%;
+    right: -10%;
+    animation-delay: -10s;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(100px, 100px) scale(1.1);
+    }
+}
+
+/* Custom Cursor Elements */
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-dark);
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--accent);
+    transition: width 0.2s, height 0.2s, transform 0.2s, background-color 0.2s;
+}
+
+a,
+button,
+.card,
+.close-btn {
+    cursor: none;
 }
 
 header {
@@ -37,6 +116,7 @@ h1 {
     font-weight: 800;
     background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
 }
@@ -59,14 +139,16 @@ main {
 }
 
 .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 12px;
     padding: 1.5rem;
-    cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 20px -5px rgba(6, 78, 59, 0.05);
 }
 
 .card:hover {
@@ -124,12 +206,14 @@ main {
 .modal-content {
     max-width: 800px;
     margin: 4rem auto;
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 3rem;
     border-radius: 20px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.2);
 }
 
 .close-btn {

@@ -33,11 +33,11 @@ const CONTENT_TEMPLATES = {
     // Add more templates as needed for variety
 };
 
-function generateContent(topic) {
-    const date = new Date().toISOString().split('T')[0];
+function generateContent(topic, inputDate) {
+    const date = inputDate || new Date().toISOString().split('T')[0];
     const templates = CONTENT_TEMPLATES[topic] || ["A comprehensive guide to " + topic + " in modern engineering."];
     const intro = templates[Math.floor(Math.random() * templates.length)];
-    
+
     return `# ${topic}: ${intro.split('.')[0]}
 
 Date: ${date}
@@ -64,10 +64,10 @@ Happy coding!
 
 async function run() {
     const topic = TOPICS[Math.floor(Math.random() * TOPICS.length)];
-    const date = new Date().toISOString().split('T')[0];
+    const date = process.argv[2] || new Date().toISOString().split('T')[0];
     const fileName = `${date}.md`;
     const filePath = path.join('notes', fileName);
-    const content = generateContent(topic);
+    const content = generateContent(topic, date);
 
     // Save the blog post
     fs.writeFileSync(filePath, content);

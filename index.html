@@ -14,6 +14,9 @@
 </head>
 
 <body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <header>
         <h1>Dev Journal AI</h1>
         <p class="tagline">Automated technical reflections, delivered daily from the edge of engineering.</p>
@@ -100,6 +103,37 @@
                 closeBtn.onclick();
             }
         };
+
+        // Custom Cursor Logic
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows exactly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline follows with a slight delay using CSS transition
+            cursorOutline.style.left = `${posX}px`;
+            cursorOutline.style.top = `${posY}px`;
+        });
+
+        // Add hover effect to cards & buttons
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('.card') || e.target.closest('button')) {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorOutline.style.backgroundColor = 'rgba(132, 204, 22, 0.1)';
+            }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('.card') || e.target.closest('button')) {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.backgroundColor = 'transparent';
+            }
+        });
 
         // Initial load
         loadPosts();

@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-03-03",
+    "title": "System design: System design Engineering Reflections",
+    "file": "2026-03-03.md"
+  },
+  {
+    "date": "2026-03-04",
+    "title": "Software engineering practices: Software engineering practices Engineering Reflections",
+    "file": "2026-03-04.md"
+  },
+  {
+    "date": "2026-03-05",
+    "title": "Node.js: Node.js Engineering Reflections",
+    "file": "2026-03-05.md"
+  },
+  {
+    "date": "2026-03-06",
+    "title": "Software engineering practices: Software engineering practices Engineering Reflections",
+    "file": "2026-03-06.md"
+  },
+  {
     "date": "2026-03-07",
     "title": "Node.js: Node.js Engineering Reflections",
     "file": "2026-03-07.md"
