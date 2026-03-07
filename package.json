@@ -4,6 +4,7 @@
   "description": "personal dev journal",
   "main": "index.js",
   "dependencies": {
+    "express": "^5.2.1",
     "openai": "^4.0.0"
   }
 }
