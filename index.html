@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Journal AI | Automated Engineering Insights</title>
+    <meta name="description" content="A daily automated developer blog powered by AI and GitHub Actions.">
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Dev Journal AI</h1>
+        <p class="tagline">Automated technical reflections, delivered daily from the edge of engineering.</p>
+    </header>
+
+    <main>
+        <div id="blog-feed">
+            <!-- Blog cards will be injected here -->
+            <p>Loading the latest insights...</p>
+        </div>
+    </main>
+
+    <div id="article-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-modal">&times;</button>
+            <div id="article-content" class="markdown-body">
+                <!-- Blog content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Dev Journal AI. Built with &hearts; by Antigravity Automation.</p>
+    </footer>
+
+    <script>
+        const blogFeed = document.getElementById('blog-feed');
+        const modal = document.getElementById('article-modal');
+        const modalContent = document.getElementById('article-content');
+        const closeBtn = document.getElementById('close-modal');
+
+        // Fetch the list of posts
+        async function loadPosts() {
+            try {
+                const response = await fetch('notes/posts.json');
+                if (!response.ok) throw new Error('No posts found yet.');
+                
+                const posts = await response.json();
+                renderPosts(posts);
+            } catch (err) {
+                blogFeed.innerHTML = `<p style="text-align:center; color: var(--text-secondary);">${err.message}</p>`;
+            }
+        }
+
+        function renderPosts(posts) {
+            blogFeed.innerHTML = '';
+            posts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <span class="date">${post.date}</span>
+                    <h3>${post.title}</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Click to read full engineering reflection...</p>
+                `;
+                card.onclick = () => openArticle(post.file);
+                blogFeed.appendChild(card);
+            });
+        }
+
+        async function openArticle(file) {
+            try {
+                modalContent.innerHTML = '<p>Loading article...</p>';
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+
+                const response = await fetch(`notes/${file}`);
+                const markdown = await response.text();
+                
+                // Convert markdown to HTML using marked.js
+                modalContent.innerHTML = marked.parse(markdown);
+            } catch (err) {
+                modalContent.innerHTML = `<p>Error loading article: ${err.message}</p>`;
+            }
+        }
+
+        closeBtn.onclick = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeBtn.onclick();
+            }
+        };
+
+        // Initial load
+        loadPosts();
+    </script>
+</body>
+</html>

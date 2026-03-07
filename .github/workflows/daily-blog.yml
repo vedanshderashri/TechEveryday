@@ -1,0 +1,45 @@
+name: Daily Blog Generation
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Every day at midnight UTC
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # Needed to push changes
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate Blog Entry
+        run: |
+          node scripts/generateBlog.js
+        env:
+          NODE_ENV: production
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add notes/
+          
+          # Check if there are changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            MESSAGES=("add dev journal entry" "update engineering notes" "add technical reflection" "refine development insights")
+            RANDOM_MESSAGE=${MESSAGES[$RANDOM % ${#MESSAGES[@]}]}
+            git commit -m "$RANDOM_MESSAGE"
+            git push
+          fi
