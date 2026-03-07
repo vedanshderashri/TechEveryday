@@ -84,7 +84,7 @@
 
                 // Deterministic random image based on the file string
                 const seed = post.file.replace(/[^0-9]/g, '');
-                const imageUrl = \`https://picsum.photos/seed/\${seed}/500/320\`;
+                const imageUrl = `https://picsum.photos/seed/${seed}/500/320`;
 
                 // Calculate formatted date
                 const dateObj = new Date(post.date);
@@ -93,23 +93,23 @@
 
                 // --- Build Main Feed Card ---
                 const card = document.createElement('div');
-                card.className = \`card \${isReverse ? 'card-reverse' : ''}\`;
-                
+                card.className = `card ${isReverse ? 'card-reverse' : ''}`;
+
                 // Process Title to look punchy like the mockup
                 let displayTitle = post.title.split(':')[0] + ": The Edge of Engineering"; // Fake mockup title
-                if(post.title.includes(":")) displayTitle = post.title;
+                if (post.title.includes(":")) displayTitle = post.title;
 
-                card.innerHTML = \`
-                    <img src="\${imageUrl}" alt="Blog Image" class="card-image" loading="lazy">
+                card.innerHTML = `
+                    <img src="${imageUrl}" alt="Blog Image" class="card-image" loading="lazy">
                     <div class="card-content">
                         <div class="card-meta">
-                            <span class="tag \${category.class}">\${category.name}</span>
-                            <span class="date">\${formattedDate}</span>
+                            <span class="tag ${category.class}">${category.name}</span>
+                            <span class="date">${formattedDate}</span>
                         </div>
-                        <h3>\${displayTitle}</h3>
-                        <span class="author">\${author}</span>
+                        <h3>${displayTitle}</h3>
+                        <span class="author">${author}</span>
                     </div>
-                \`;
+                `;
                 card.onclick = () => openArticle(post.file);
                 blogFeed.appendChild(card);
 
@@ -117,16 +117,16 @@
                 if (index < 5) {
                     const sideItem = document.createElement('div');
                     sideItem.className = 'sidebar-item';
-                    sideItem.innerHTML = \`
+                    sideItem.innerHTML = `
                         <div>
-                            <h4>\${displayTitle}</h4>
+                            <h4>${displayTitle}</h4>
                             <div class="author-line">
-                                <span>\${author}</span>
-                                <span>\${formattedDate}</span>
+                                <span>${author}</span>
+                                <span>${formattedDate}</span>
                             </div>
                         </div>
-                        <span class="tag-badge">\${category.name}</span>
-                    \`;
+                        <span class="tag-badge">${category.name}</span>
+                    `;
                     sideItem.onclick = () => openArticle(post.file);
                     sidebarFeed.appendChild(sideItem);
                 }
@@ -139,13 +139,13 @@
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
 
-                const response = await fetch(\`notes/\${file}\`);
+                const response = await fetch(`notes/${file}`);
                 const markdown = await response.text();
-                
+
                 // Convert markdown to HTML using marked.js
                 modalContent.innerHTML = marked.parse(markdown);
             } catch (err) {
-                modalContent.innerHTML = \`<p>Error loading article: \${err.message}</p>\`;
+                modalContent.innerHTML = `<p>Error loading article: ${err.message}</p>`;
             }
         }
 
