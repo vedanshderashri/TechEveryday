@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-08-05",
+    "title": "DevOps: DevOps Engineering Reflections",
+    "file": "2026-08-05.md"
+  },
+  {
     "date": "2026-08-04",
     "title": "Browser internals: Browser internals Engineering Reflections",
     "file": "2026-08-04.md"
