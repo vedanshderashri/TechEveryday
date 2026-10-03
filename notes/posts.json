@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-10-03",
+    "title": "Browser internals: Browser internals Engineering Reflections",
+    "file": "2026-10-03.md"
+  },
+  {
     "date": "2026-10-02",
     "title": "React: React Engineering Reflections",
     "file": "2026-10-02.md"
